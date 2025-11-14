@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AgriHidra - Dashboard</title>
+    <!-- Archivo CSS externo: styles.css -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="logo">🌱</div>
+          <div class="brand-text">
+            <h1>AgriHidra</h1>
+            <small>Sistema Inteligente</small>
+          </div>
+        </div>
+
+        <nav class="nav">
+          <ul>
+            <li class="active">Inicio</li>
+            <li>Reportes</li>
+            <li>Cultivos</li>
+            <li>Alertas</li>
+            <li>Sensores</li>
+            <li>Configuración</li>
+          </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+          <small>Última actualización</small>
+          <span>Hace 2 minutos</span>
+        </div>
+      </aside>
+
+      <!-- CONTENIDO PRINCIPAL -->
+      <main class="main">
+        <header class="header">
+          <div class="header-left">
+            <h2>Página Principal</h2>
+            <p>Aquí está el resumen del sistema.</p>
+          </div>
+          <div class="header-right">
+            <div class="last-update">
+              Última actualización<br /><strong>Hace 2 minutos</strong>
+            </div>
+          </div>
+        </header>
+
+        <!-- TARJETAS DE ESTADO -->
+        <section class="stats">
+          <article class="card stat">
+            <div class="stat-icon">🌡️</div>
+            <div class="stat-body">
+              <small>Temperatura</small>
+              <strong>24°C</strong>
+              <span class="muted">+2°C</span>
+            </div>
+          </article>
+
+          <article class="card stat">
+            <div class="stat-icon">💧</div>
+            <div class="stat-body">
+              <small>Humedad Suelo</small>
+              <strong>68%</strong>
+              <span class="muted">Óptimo</span>
+            </div>
+          </article>
+
+          <article class="card stat">
+            <div class="stat-icon">💾</div>
+            <div class="stat-body">
+              <small>Ahorro Agua</small>
+              <strong>1,250L</strong>
+              <span class="muted">+15%</span>
+            </div>
+          </article>
+
+          <article class="card stat">
+            <div class="stat-icon">⚠️</div>
+            <div class="stat-body">
+              <small>Alertas</small>
+              <strong>3</strong>
+              <span class="badge red">2 Activas</span>
+            </div>
+          </article>
+        </section>
+
+        <!-- GRID PRINCIPAL: gráficos y mapa -->
+        <section class="dashboard-grid">
+          <div class="card chart humidity">
+            <h3>Humedad del Suelo</h3>
+            <div class="donut" aria-hidden="true">
+              <!-- Lugar para SVG o canvas que hará el gráfico con CSS/JS si se desea -->
+              <div class="donut-center">68%</div>
+            </div>
+          </div>
+
+          <div class="card chart water-saved">
+            <h3>Ahorro de Agua</h3>
+            <div class="donut">
+              <div class="donut-center">75%</div>
+            </div>
+          </div>
+
+          <div class="card map">
+            <h3>Mapa del Terreno</h3>
+            <div class="map-grid">
+              <div class="zone">Zona A<br /><small>Tomates</small></div>
+              <div class="zone warning">
+                Zona B<br /><small>Necesita riego</small>
+              </div>
+              <div class="zone">Zona C<br /><small>Lechugas</small></div>
+              <div class="zone">Zona D<br /><small>Sistema riego</small></div>
+              <div class="zone">Zona E<br /><small>Zanahorias</small></div>
+              <div class="zone alert">
+                Zona F<br /><small>Alerta calor</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="card realtime">
+            <h3>Datos en Tiempo Real</h3>
+            <ul class="realtime-list">
+              <li>
+                <strong>Condiciones Climáticas</strong>
+                <span class="muted">Soleado, viento suave</span>
+                <span class="status positive">Favorable</span>
+              </li>
+              <li>
+                <strong>Temperatura del Aire</strong>
+                <span class="muted">Promedio últimas 24h</span>
+                <span class="value">22°C</span>
+              </li>
+              <li>
+                <strong>Humedad Relativa</strong>
+                <span class="muted">Nivel actual del ambiente</span>
+                <span class="value">65%</span>
+              </li>
+              <li>
+                <strong>Velocidad del Viento</strong>
+                <span class="muted">Promedio actual</span>
+                <span class="value">8 km/h</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="card alerts">
+            <h3>
+              Alertas Activas <span class="badge red small">3 Activas</span>
+            </h3>
+
+            <div class="alert-item danger">
+              <h4>Zona B - Riego Requerido</h4>
+              <p>La humedad del suelo está por debajo del 40%.</p>
+              <div class="alert-actions">
+                <button class="btn primary">Activar Riego</button>
+                <small>Hace 15 min</small>
+              </div>
+            </div>
+
+            <div class="alert-item warning">
+              <h4>Temperatura Elevada</h4>
+              <p>Se detectó temperatura por encima de 30°C</p>
+              <div class="alert-actions">
+                <button class="btn">Ver Detalles</button>
+                <small>Hace 1 hora</small>
+              </div>
+            </div>
+
+            <div class="alert-item info">
+              <h4>Mantenimiento Programado</h4>
+              <p>Revisión del sistema de riego en 2 días</p>
+              <div class="alert-actions">
+                <button class="btn">Programar</button>
+                <small>Hace 3 horas</small>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <footer class="footer">
+          <p>© AgriHidra - Sistema Inteligente</p>
+        </footer>
+      </main>
+    </div>
+
+    <!-- Si deseas, en el CSS puedes colocar estilos para .donut para simular los gráficos -->
+  </body>
+</html>
