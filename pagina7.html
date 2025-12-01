@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AgriHidra - Configuración y Soporte</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+        background: #f5f5f5;
+        color: #333;
+      }
+
+      .container {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        width: 240px;
+        background: #fff;
+        border-right: 1px solid #e5e7eb;
+        padding: 20px 0;
+        position: fixed;
+        height: 100vh;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 0 20px;
+        margin-bottom: 30px;
+      }
+
+      .logo-icon {
+        width: 40px;
+        height: 40px;
+        background: #10b981;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 20px;
+      }
+
+      .logo-text h2 {
+        font-size: 16px;
+        color: #111;
+        font-weight: 600;
+      }
+
+      .logo-text p {
+        font-size: 12px;
+        color: #6b7280;
+      }
+
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 20px;
+        color: #6b7280;
+        text-decoration: none;
+        transition: all 0.2s;
+        cursor: pointer;
+        font-size: 14px;
+      }
+
+      .nav-item:hover {
+        background: #f9fafb;
+        color: #111;
+      }
+
+      .nav-item.active {
+        background: #10b981;
+        color: white;
+      }
+
+      .nav-item i {
+        width: 20px;
+        font-size: 16px;
+      }
+
+      /* Main Content */
+      .main-content {
+        margin-left: 240px;
+        flex: 1;
+        padding: 30px;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+      }
+
+      .header-title h1 {
+        font-size: 24px;
+        margin-bottom: 5px;
+      }
+
+      .header-title p {
+        font-size: 14px;
+        color: #6b7280;
+      }
+
+      .header-icons {
+        display: flex;
+        gap: 15px;
+      }
+
+      .icon-btn {
+        width: 40px;
+        height: 40px;
+        background: #f9fafb;
+        border: none;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: #6b7280;
+      }
+
+      .icon-btn:hover {
+        background: #e5e7eb;
+      }
+
+      .content-grid {
+        display: grid;
+        grid-template-columns: 1fr 350px;
+        gap: 25px;
+      }
+
+      /* Cards */
+      .card {
+        background: white;
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+
+      .card-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 20px;
+      }
+
+      /* Settings Items */
+      .setting-item {
+        display: flex;
+        align-items: center;
+        padding: 15px 0;
+        border-bottom: 1px solid #f3f4f6;
+      }
+
+      .setting-item:last-child {
+        border-bottom: none;
+      }
+
+      .setting-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        margin-right: 15px;
+      }
+
+      .icon-blue {
+        background: #dbeafe;
+        color: #2563eb;
+      }
+
+      .icon-green {
+        background: #d1fae5;
+        color: #10b981;
+      }
+
+      .icon-purple {
+        background: #e9d5ff;
+        color: #9333ea;
+      }
+
+      .icon-orange {
+        background: #fed7aa;
+        color: #ea580c;
+      }
+
+      .icon-yellow {
+        background: #fef3c7;
+        color: #f59e0b;
+      }
+
+      .setting-info {
+        flex: 1;
+      }
+
+      .setting-label {
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 3px;
+      }
+
+      .setting-desc {
+        font-size: 12px;
+        color: #6b7280;
+      }
+
+      /* Toggle Switch */
+      .toggle-switch {
+        position: relative;
+        width: 50px;
+        height: 26px;
+      }
+
+      .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #e5e7eb;
+        transition: 0.4s;
+        border-radius: 34px;
+      }
+
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 20px;
+        width: 20px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+
+      input:checked + .slider {
+        background-color: #10b981;
+      }
+
+      input:checked + .slider:before {
+        transform: translateX(24px);
+      }
+
+      /* Select Dropdown */
+      .select-wrapper {
+        position: relative;
+      }
+
+      select {
+        width: 140px;
+        padding: 8px 32px 8px 12px;
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+        font-size: 14px;
+        background: white;
+        cursor: pointer;
+        appearance: none;
+      }
+
+      .select-wrapper::after {
+        content: "\f078";
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        color: #6b7280;
+        font-size: 12px;
+      }
+
+      /* Buttons */
+      .btn {
+        padding: 10px 20px;
+        border: 1px solid #e5e7eb;
+        background: white;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s;
+        font-weight: 500;
+      }
+
+      .btn:hover {
+        background: #f9fafb;
+      }
+
+      .btn-primary {
+        background: #10b981;
+        color: white;
+        border: none;
+      }
+
+      .btn-primary:hover {
+        background: #059669;
+      }
+
+      .btn-outline {
+        border: 1px solid #e5e7eb;
+        background: white;
+      }
+
+      .btn-danger {
+        color: #ef4444;
+        border-color: #fecaca;
+      }
+
+      .btn-danger:hover {
+        background: #fef2f2;
+      }
+
+      .btn-full {
+        width: 100%;
+        justify-content: center;
+      }
+
+      /* Input Fields */
+      .input-group {
+        margin-bottom: 20px;
+      }
+
+      .input-label {
+        font-size: 13px;
+        color: #6b7280;
+        margin-bottom: 8px;
+        display: block;
+        font-weight: 500;
+      }
+
+      .input-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+      }
+
+      input[type="text"],
+      input[type="number"] {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+        font-size: 14px;
+      }
+
+      input[type="text"]:focus,
+      input[type="number"]:focus {
+        outline: none;
+        border-color: #10b981;
+      }
+
+      /* User Profile Section */
+      .user-profile-section {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 20px 0;
+        border-bottom: 1px solid #f3f4f6;
+        margin-bottom: 20px;
+      }
+
+      .user-avatar {
+        width: 60px;
+        height: 60px;
+        background: #111;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 24px;
+      }
+
+      .user-info h3 {
+        font-size: 16px;
+        margin-bottom: 3px;
+      }
+
+      .user-info p {
+        font-size: 13px;
+        color: #6b7280;
+      }
+
+      .btn-edit {
+        margin-left: auto;
+      }
+
+      /* Support Widget */
+      .support-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 15px;
+        background: #f0fdf4;
+        border-radius: 8px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .support-item:hover {
+        background: #dcfce7;
+      }
+
+      .support-icon {
+        width: 45px;
+        height: 45px;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #10b981;
+        font-size: 20px;
+      }
+
+      .support-text h4 {
+        font-size: 14px;
+        margin-bottom: 3px;
+      }
+
+      .support-text p {
+        font-size: 12px;
+        color: #6b7280;
+      }
+
+      /* Quick Actions */
+      .action-btn {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px;
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 14px;
+      }
+
+      .action-btn:hover {
+        background: #f9fafb;
+        border-color: #10b981;
+      }
+
+      /* Status Widget */
+      .status-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 0;
+        border-bottom: 1px solid #f3f4f6;
+      }
+
+      .status-item:last-child {
+        border-bottom: none;
+      }
+
+      .status-label {
+        font-size: 13px;
+        color: #6b7280;
+      }
+
+      .status-value {
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .status-connected {
+        color: #10b981;
+      }
+
+      .status-time {
+        color: #6b7280;
+      }
+
+      .btn-disconnect {
+        margin-top: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <aside class="sidebar">
+        <div class="logo">
+          <div class="logo-icon">
+            <i class="fas fa-seedling"></i>
+          </div>
+          <div class="logo-text">
+            <h2>AgriHidra</h2>
+            <p>Sistema de Riego</p>
+          </div>
+        </div>
+
+        <nav>
+          <a href="#" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Inicio</span>
+          </a>
+          <a href="#" class="nav-item">
+            <i class="fas fa-chart-bar"></i>
+            <span>Reportes</span>
+          </a>
+          <a href="#" class="nav-item">
+            <i class="fas fa-seedling"></i>
+            <span>Cultivos</span>
+          </a>
+          <a href="#" class="nav-item">
+            <i class="fas fa-bell"></i>
+            <span>Alertas</span>
+          </a>
+          <a href="#" class="nav-item">
+            <i class="fas fa-tint"></i>
+            <span>Sensores</span>
+          </a>
+          <a href="#" class="nav-item active">
+            <i class="fas fa-cog"></i>
+            <span>Configuración</span>
+          </a>
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        <div class="header">
+          <div class="header-title">
+            <h1>Configuración y Soporte</h1>
+            <p>Gestiona las preferencias del sistema y obtén ayuda</p>
+          </div>
+          <div class="header-icons">
+            <button class="icon-btn">
+              <i class="fas fa-bell"></i>
+            </button>
+            <button class="icon-btn">
+              <i class="fas fa-user"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="content-grid">
+          <div>
+            <!-- Idioma y Notificaciones -->
+            <div class="card">
+              <h2 class="card-title">Idioma y Notificaciones</h2>
+
+              <div class="setting-item">
+                <div class="setting-icon icon-blue">
+                  <i class="fas fa-globe"></i>
+                </div>
+                <div class="setting-info">
+                  <div class="setting-label">Idioma del Sistema</div>
+                  <div class="setting-desc">Selecciona tu idioma preferido</div>
+                </div>
+                <div class="select-wrapper">
+                  <select>
+                    <option>Español</option>
+                    <option>English</option>
+                    <option>Português</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="setting-item">
+                <div class="setting-icon icon-green">
+                  <i class="fas fa-comment"></i>
+                </div>
+                <div class="setting-info">
+                  <div class="setting-label">Notificaciones SMS</div>
+                  <div class="setting-desc">
+                    Recibe alertas por mensaje de texto
+                  </div>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" checked />
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Configuración del Sistema -->
+            <div class="card">
+              <h2 class="card-title">Configuración del Sistema</h2>
+
+              <div class="setting-item">
+                <div class="setting-icon icon-purple">
+                  <i class="fas fa-sync"></i>
+                </div>
+                <div class="setting-info">
+                  <div class="setting-label">Sincronizar Sensores</div>
+                  <div class="setting-desc">
+                    Última sincronización: hace 5 min
+                  </div>
+                </div>
+                <button class="btn btn-primary">Sincronizar</button>
+              </div>
+
+              <div class="setting-item" style="align-items: flex-start">
+                <div class="setting-icon icon-orange">
+                  <i class="fas fa-sliders-h"></i>
+                </div>
+                <div class="setting-info" style="flex: 1">
+                  <div class="setting-label" style="margin-bottom: 15px">
+                    Parámetros del Sistema
+                  </div>
+
+                  <div class="input-row">
+                    <div class="input-group" style="margin-bottom: 0">
+                      <label class="input-label"
+                        >Intervalo de Riego (min)</label
+                      >
+                      <input type="number" value="30" />
+                    </div>
+                    <div class="input-group" style="margin-bottom: 0">
+                      <label class="input-label">Humedad Mínima (%)</label>
+                      <input type="number" value="40" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="setting-item">
+                <div class="setting-icon icon-yellow">
+                  <i class="fas fa-battery-half"></i>
+                </div>
+                <div class="setting-info">
+                  <div class="setting-label">Modo Ahorro de Batería</div>
+                  <div class="setting-desc">Reduce el consumo energético</div>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" />
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Configuración de Cuenta -->
+            <div class="card">
+              <h2 class="card-title">Configuración de Cuenta</h2>
+
+              <div class="user-profile-section">
+                <div class="user-avatar">
+                  <i class="fas fa-user"></i>
+                </div>
+                <div class="user-info">
+                  <h3>Carlos Mamani</h3>
+                  <p>Thefresh@gmail.com</p>
+                </div>
+                <button class="btn btn-outline btn-edit">Editar Perfil</button>
+              </div>
+
+              <div
+                style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px"
+              >
+                <button class="btn btn-outline">
+                  <i class="fas fa-key"></i>
+                  Cambiar Contraseña
+                </button>
+                <button class="btn btn-danger">
+                  <i class="fas fa-power-off"></i>
+                  Cerrar Sesión
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sidebar Derecha -->
+          <div>
+            <!-- Soporte Técnico -->
+            <div class="card">
+              <h2 class="card-title">Soporte Técnico</h2>
+
+              <div class="support-item">
+                <div class="support-icon">
+                  <i class="fas fa-comments"></i>
+                </div>
+                <div class="support-text">
+                  <h4>Chat en Vivo</h4>
+                  <p>Obtén ayuda inmediata de nuestro equipo</p>
+                </div>
+              </div>
+
+              <button class="btn btn-primary btn-full">Iniciar Chat</button>
+
+              <div class="support-item" style="margin-top: 15px">
+                <div class="support-icon">
+                  <i class="fab fa-whatsapp"></i>
+                </div>
+                <div class="support-text">
+                  <h4>WhatsApp</h4>
+                  <p>Contacto directo: +51 999 888 777</p>
+                </div>
+              </div>
+
+              <button class="btn btn-primary btn-full">Abrir WhatsApp</button>
+            </div>
+
+            <!-- Acciones Rápidas -->
+            <div class="card">
+              <h2 class="card-title">Acciones Rápidas</h2>
+
+              <button class="action-btn">
+                <i class="fas fa-download"></i>
+                <span>Descargar Manual</span>
+              </button>
+
+              <button class="action-btn">
+                <i class="fas fa-video"></i>
+                <span>Tutoriales en Video</span>
+              </button>
+
+              <button class="action-btn">
+                <i class="fas fa-exclamation-circle"></i>
+                <span>Reportar Problema</span>
+              </button>
+
+              <button class="action-btn">
+                <i class="fas fa-star"></i>
+                <span>Evaluar App</span>
+              </button>
+            </div>
+
+            <!-- Estado del Sistema -->
+            <div class="card">
+              <h2 class="card-title">Estado del Sistema</h2>
+
+              <div class="status-item">
+                <span class="status-label">Conexión</span>
+                <span class="status-value status-connected">Conectado</span>
+              </div>
+
+              <div class="status-item">
+                <span class="status-label">Sensores</span>
+                <span class="status-value">4/4 Activos</span>
+              </div>
+
+              <div class="status-item">
+                <span class="status-label">Última Act.</span>
+                <span class="status-value status-time">Hace 2 min</span>
+              </div>
+
+              <button class="btn btn-danger btn-full btn-disconnect">
+                <i class="fas fa-power-off"></i>
+                Desconexión Segura
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const menuItems = document.querySelectorAll(".menu-item");
+    
+            menuItems.forEach(function(item, index) {
+                item.style.cursor = "pointer";
+                item.style.pointerEvents = "auto";
+                item.style.position = "relative";
+                item.style.zIndex = "1000";
+    
+                item.addEventListener("mousedown", function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+    
+                    let page = "";
+    
+                    switch (index) {
+                        case 0:
+                            page = "index.html";
+                            break;
+                        case 1:
+                            page = "pagina4.html";
+                            break;
+                        case 2:
+                            page = "pagina2.html";
+                            break;
+                        case 3:
+                            page = "pagina5.html";
+                            break;
+                        case 4:
+                            page = "pagina3.html";
+                            break;
+                        case 5:
+                            page = "pagina6.html";
+                            break;
+                        case 6:
+                            page = "pagina7.html";
+                            break;
+                    }
+    
+                    if (page) {
+                        window.location.href = page;
+                    }
+                });
+            });
+        });
+    </script>
+  </body>
+</html>

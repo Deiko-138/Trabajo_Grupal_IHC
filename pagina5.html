@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agricultores - AgriHidra</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+        background: #f5f5f5;
+        display: flex;
+        height: 100vh;
+      }
+
+      .sidebar {
+        width: 240px;
+        background: white;
+        border-right: 1px solid #e0e0e0;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .logo {
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border-bottom: 1px solid #e0e0e0;
+      }
+
+      .logo-icon {
+        width: 32px;
+        height: 32px;
+        background: #10b981;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+      }
+
+      .logo-text h3 {
+        font-size: 16px;
+        color: #1f2937;
+      }
+
+      .logo-text p {
+        font-size: 11px;
+        color: #6b7280;
+      }
+
+      .logo-badge {
+        background: #10b981;
+        color: white;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-size: 9px;
+        font-weight: 600;
+        margin-left: auto;
+      }
+
+      .menu {
+        flex: 1;
+        padding: 10px 0;
+      }
+
+      .menu-item {
+        padding: 12px 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #6b7280;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 14px;
+      }
+
+      .menu-item:hover {
+        background: #f9fafb;
+        color: #1f2937;
+      }
+
+      .menu-item.active {
+        background: #10b981;
+        color: white;
+        border-right: 3px solid #059669;
+      }
+
+      .main-content {
+        flex: 1;
+        overflow-y: auto;
+        background: #f9fafb;
+      }
+
+      .header {
+        background: white;
+        padding: 15px 30px;
+        border-bottom: 1px solid #e5e7eb;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .header-left {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .btn-map {
+        background: #10b981;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        border: none;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s;
+      }
+
+      .btn-map:hover {
+        background: #059669;
+      }
+
+      .filter-dropdown {
+        padding: 10px 16px;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 13px;
+        color: #1f2937;
+        background: white;
+        cursor: pointer;
+        min-width: 180px;
+      }
+
+      .btn-filter {
+        background: #10b981;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        border: none;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .header-right {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .notifications {
+        position: relative;
+        cursor: pointer;
+      }
+
+      .notification-icon {
+        font-size: 20px;
+      }
+
+      .notification-badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: #ef4444;
+        color: white;
+        border-radius: 50%;
+        width: 18px;
+        height: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        font-weight: 600;
+      }
+
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        color: #1f2937;
+      }
+
+      .content {
+        padding: 30px;
+      }
+
+      .content-grid {
+        display: grid;
+        grid-template-columns: 1fr 350px;
+        gap: 25px;
+      }
+
+      .map-section {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .section-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #1f2937;
+      }
+
+      .map-legend {
+        display: flex;
+        gap: 20px;
+        font-size: 12px;
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .legend-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+      }
+
+      .legend-dot.green {
+        background: #10b981;
+      }
+      .legend-dot.orange {
+        background: #f59e0b;
+      }
+      .legend-dot.red {
+        background: #ef4444;
+      }
+
+      .map-container {
+        background: #9ca3af;
+        border-radius: 8px;
+        padding: 30px;
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 15px;
+        min-height: 350px;
+      }
+
+      .parcel {
+        background: #6b7280;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        aspect-ratio: 1;
+      }
+
+      .parcel:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      }
+
+      .farmers-section {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        margin-top: 25px;
+      }
+
+      .farmers-table {
+        width: 100%;
+        margin-top: 20px;
+      }
+
+      .table-header {
+        display: grid;
+        grid-template-columns: 2fr 1.5fr 1.5fr 1.5fr 1fr;
+        gap: 15px;
+        padding: 12px 15px;
+        background: #f9fafb;
+        border-radius: 8px;
+        font-size: 12px;
+        font-weight: 600;
+        color: #6b7280;
+        margin-bottom: 10px;
+      }
+
+      .table-row {
+        display: grid;
+        grid-template-columns: 2fr 1.5fr 1.5fr 1.5fr 1fr;
+        gap: 15px;
+        padding: 15px;
+        background: white;
+        border: 1px solid #f3f4f6;
+        border-radius: 8px;
+        margin-bottom: 8px;
+        align-items: center;
+        transition: all 0.2s;
+      }
+
+      .table-row:hover {
+        border-color: #10b981;
+        box-shadow: 0 2px 4px rgba(16, 185, 129, 0.1);
+      }
+
+      .farmer-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .farmer-avatar {
+        width: 36px;
+        height: 36px;
+        background: #1f2937;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 16px;
+      }
+
+      .farmer-name {
+        font-size: 14px;
+        font-weight: 500;
+        color: #1f2937;
+      }
+
+      .parcel-tags {
+        font-size: 13px;
+        color: #6b7280;
+      }
+
+      .status-badge {
+        display: inline-block;
+        padding: 5px 12px;
+        border-radius: 6px;
+        font-size: 11px;
+        font-weight: 600;
+      }
+
+      .status-badge.optimal {
+        background: #d1fae5;
+        color: #065f46;
+      }
+
+      .status-badge.moderate {
+        background: #fef3c7;
+        color: #92400e;
+      }
+
+      .status-badge.critical {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+
+      .last-reading {
+        font-size: 12px;
+        color: #6b7280;
+      }
+
+      .actions {
+        display: flex;
+        gap: 8px;
+      }
+
+      .action-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 6px;
+        border: 1px solid #e5e7eb;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 14px;
+      }
+
+      .action-btn:hover {
+        background: #f9fafb;
+        border-color: #10b981;
+      }
+
+      .sidebar-right {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .status-section {
+        margin-bottom: 30px;
+      }
+
+      .status-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 15px;
+      }
+
+      .status-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px solid #f3f4f6;
+      }
+
+      .status-item:last-child {
+        border-bottom: none;
+      }
+
+      .status-label {
+        font-size: 13px;
+        color: #6b7280;
+      }
+
+      .status-value {
+        font-size: 14px;
+        font-weight: 600;
+        color: #1f2937;
+      }
+
+      .status-value.green {
+        color: #10b981;
+      }
+      .status-value.red {
+        color: #ef4444;
+      }
+      .status-value.orange {
+        color: #f59e0b;
+      }
+
+      .quick-actions {
+        margin-top: 25px;
+      }
+
+      .quick-actions-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 15px;
+      }
+
+      .action-card {
+        padding: 12px;
+        background: #10b981;
+        color: white;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 13px;
+        font-weight: 500;
+      }
+
+      .action-card:hover {
+        background: #059669;
+        transform: translateY(-2px);
+      }
+
+      .action-card.secondary {
+        background: white;
+        color: #1f2937;
+        border: 1px solid #e5e7eb;
+      }
+
+      .action-card.secondary:hover {
+        background: #f9fafb;
+        border-color: #10b981;
+      }
+
+      .alert-banner-right {
+        background: #fee2e2;
+        padding: 12px;
+        border-radius: 8px;
+        border-left: 3px solid #ef4444;
+        margin-bottom: 20px;
+      }
+
+      .alert-title-right {
+        font-size: 12px;
+        font-weight: 600;
+        color: #991b1b;
+        margin-bottom: 4px;
+      }
+
+      .alert-count {
+        font-size: 11px;
+        color: #7f1d1d;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar">
+      <div class="logo">
+        <div class="logo-icon">🌱</div>
+        <div class="logo-text">
+          <h3>AgriHidra</h3>
+        </div>
+        <div class="logo-badge">TÉCNICO</div>
+      </div>
+      <div class="menu">
+        <div class="menu-item">
+          <span>🗺️</span>
+          Mapa de Parcelas
+        </div>
+        <div class="menu-item active">
+          <span>👥</span>
+          Agricultores
+        </div>
+        <div class="menu-item">
+          <span>📊</span>
+          Calibración
+        </div>
+        <div class="menu-item">
+          <span>🔧</span>
+          Mantenimiento
+        </div>
+        <div class="menu-item">
+          <span>📈</span>
+          Reportes
+        </div>
+        <div class="menu-item">
+          <span>⚠️</span>
+          Alertas
+        </div>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <div class="header">
+        <div class="header-left">
+          <button class="btn-map">
+            <span>🗺️</span>
+            Mapa de Parcelas
+          </button>
+          <select class="filter-dropdown">
+            <option>Todas las Regiones</option>
+            <option>Región Norte</option>
+            <option>Región Sur</option>
+            <option>Región Este</option>
+            <option>Región Oeste</option>
+          </select>
+          <button class="btn-filter">
+            <span>🔍</span>
+            Filtrar
+          </button>
+        </div>
+        <div class="header-right">
+          <div class="notifications">
+            <span class="notification-icon">🔔</span>
+            <div class="notification-badge">3</div>
+          </div>
+          <div class="notifications">
+            <span class="notification-icon">💬</span>
+          </div>
+          <div class="user-info">
+            <span>👤</span>
+            <span>Juan Pérez</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="content-grid">
+          <div>
+            <div class="map-section">
+              <div class="section-header">
+                <h2 class="section-title">Mapa de Parcelas</h2>
+                <div class="map-legend">
+                  <div class="legend-item">
+                    <div class="legend-dot green"></div>
+                    <span>Óptimo</span>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-dot orange"></div>
+                    <span>Moderado</span>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-dot red"></div>
+                    <span>Crítico</span>
+                  </div>
+                </div>
+              </div>
+              <div class="map-container">
+                <div class="parcel">P1</div>
+                <div class="parcel">P2</div>
+                <div class="parcel">P3</div>
+                <div class="parcel">P4</div>
+                <div class="parcel">P5</div>
+                <div class="parcel">P6</div>
+                <div class="parcel">P7</div>
+                <div class="parcel">P8</div>
+                <div class="parcel">P9</div>
+                <div class="parcel">P10</div>
+                <div class="parcel">P11</div>
+                <div class="parcel">P12</div>
+              </div>
+            </div>
+
+            <div class="farmers-section">
+              <h2 class="section-title">Lista de Agricultores</h2>
+
+              <div class="farmers-table">
+                <div class="table-header">
+                  <div>Agricultor</div>
+                  <div>Parcela</div>
+                  <div>Estado Hídrico</div>
+                  <div>Última Lectura</div>
+                  <div>Acciones</div>
+                </div>
+
+                <div class="table-row">
+                  <div class="farmer-info">
+                    <div class="farmer-avatar">👤</div>
+                    <div class="farmer-name">Carlos Mendoza</div>
+                  </div>
+                  <div class="parcel-tags">P1, P3, P5</div>
+                  <div>
+                    <span class="status-badge optimal">Óptimo</span>
+                  </div>
+                  <div class="last-reading">Hace 15 min</div>
+                  <div class="actions">
+                    <button class="action-btn" title="Ver detalles">👁️</button>
+                    <button class="action-btn" title="Mensaje">💬</button>
+                    <button class="action-btn" title="Reportes">📄</button>
+                  </div>
+                </div>
+
+                <div class="table-row">
+                  <div class="farmer-info">
+                    <div class="farmer-avatar">👤</div>
+                    <div class="farmer-name">María González</div>
+                  </div>
+                  <div class="parcel-tags">P2, P6</div>
+                  <div>
+                    <span class="status-badge moderate">Moderado</span>
+                  </div>
+                  <div class="last-reading">Hace 8 min</div>
+                  <div class="actions">
+                    <button class="action-btn" title="Ver detalles">👁️</button>
+                    <button class="action-btn" title="Mensaje">💬</button>
+                    <button class="action-btn" title="Reportes">📄</button>
+                  </div>
+                </div>
+
+                <div class="table-row">
+                  <div class="farmer-info">
+                    <div class="farmer-avatar">👤</div>
+                    <div class="farmer-name">Roberto Silva</div>
+                  </div>
+                  <div class="parcel-tags">P4, P9</div>
+                  <div>
+                    <span class="status-badge critical">Crítico</span>
+                  </div>
+                  <div class="last-reading">Hace 32 min</div>
+                  <div class="actions">
+                    <button class="action-btn" title="Ver detalles">👁️</button>
+                    <button class="action-btn" title="Mensaje">💬</button>
+                    <button class="action-btn" title="Reportes">📄</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sidebar-right">
+            <div class="alert-banner-right">
+              <div class="alert-title-right">⚠️ Alertas Activas (3)</div>
+            </div>
+
+            <div class="status-section">
+              <h3 class="status-title">Estado General</h3>
+              <div class="status-item">
+                <span class="status-label">Sensores Activos</span>
+                <span class="status-value green">24/26</span>
+              </div>
+              <div class="status-item">
+                <span class="status-label">Alertas Críticas</span>
+                <span class="status-value red">3</span>
+              </div>
+              <div class="status-item">
+                <span class="status-label">Mantenimientos</span>
+                <span class="status-value orange">2</span>
+              </div>
+            </div>
+
+            <div class="quick-actions">
+              <h3 class="quick-actions-title">Acciones Rápidas</h3>
+              <div class="action-card">
+                <span>⚙️</span>
+                <span>Calibrar Sensores</span>
+              </div>
+              <div class="action-card secondary">
+                <span>📝</span>
+                <span>Registrar Observación</span>
+              </div>
+              <div class="action-card secondary">
+                <span>📊</span>
+                <span>Generar Reporte</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const menuItems = document.querySelectorAll(".menu-item");
+    
+            menuItems.forEach(function(item, index) {
+                item.style.cursor = "pointer";
+                item.style.pointerEvents = "auto";
+                item.style.position = "relative";
+                item.style.zIndex = "1000";
+    
+                item.addEventListener("mousedown", function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+    
+                    let page = "";
+    
+                    switch (index) {
+                        case 0:
+                            page = "index.html";
+                            break;
+                        case 1:
+                            page = "pagina4.html";
+                            break;
+                        case 2:
+                            page = "pagina2.html";
+                            break;
+                        case 3:
+                            page = "pagina5.html";
+                            break;
+                        case 4:
+                            page = "pagina3.html";
+                            break;
+                        case 5:
+                            page = "pagina6.html";
+                            break;
+                        case 6:
+                            page = "pagina7.html";
+                            break;
+                    }
+    
+                    if (page) {
+                        window.location.href = page;
+                    }
+                });
+            });
+        });
+    </script>
+  </body>
+</html>
