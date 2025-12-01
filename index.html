@@ -21,15 +21,14 @@
 
         <nav class="nav">
           <ul>
-            <li class="active">Inicio</li>
-            <li>Reportes</li>
-            <li>Cultivos</li>
-            <li>Alertas</li>
-            <li>Sensores</li>
-            <li>Configuración</li>
+            <li class="menu-item active" data-page="inicio">Inicio</li>
+            <li class="menu-item" data-page="reportes">Reportes</li>
+            <li class="menu-item" data-page="cultivos">Cultivos</li>
+            <li class="menu-item" data-page="alertas">Alertas</li>
+            <li class="menu-item" data-page="sensores">Sensores</li>
+            <li class="menu-item" data-page="configuracion">Configuración</li>
           </ul>
         </nav>
-
         <div class="sidebar-footer">
           <small>Última actualización</small>
           <span>Hace 2 minutos</span>
@@ -184,29 +183,31 @@
         </footer>
       </main>
     </div>
-        <script>
+    <script>
+      // Configuración de páginas
       const pages = {
-          'inicio': 'index.html',
-          'reportes': 'pagina2.html',
-          'cultivos': 'pagina3.html',
-          'alertas': 'pagina4.html',
-          'sensores': 'pagina5.html',
-          'configuracion': 'pagina7.html'
+        inicio: "index.html",
+        reportes: "pagina2.html",
+        cultivos: "pagina3.html",
+        alertas: "pagina4.html",
+        sensores: "pagina5.html",
+        configuracion: "pagina7.html",
       };
-      
-      document.addEventListener('DOMContentLoaded', function() {
-          const menuItems = document.querySelectorAll('.menu-item[data-page]');
-          
-          menuItems.forEach(item => {
-              item.style.cursor = 'pointer';
-              item.addEventListener('click', function() {
-                  const page = this.getAttribute('data-page');
-                  if (pages[page]) {
-                      window.location.href = pages[page];
-                  }
-              });
+
+      // Navegación
+      document.addEventListener("DOMContentLoaded", function () {
+        const menuItems = document.querySelectorAll(".menu-item[data-page]");
+
+        menuItems.forEach((item) => {
+          item.style.cursor = "pointer";
+          item.addEventListener("click", function () {
+            const page = this.getAttribute("data-page");
+            if (pages[page]) {
+              window.location.href = pages[page];
+            }
           });
+        });
       });
-      </script>
+    </script>
   </body>
 </html>
