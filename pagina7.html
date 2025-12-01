@@ -524,32 +524,32 @@
           </div>
         </div>
 
-        <nav>
-          <a href="#" class="nav-item">
-            <i class="fas fa-home"></i>
-            <span>Inicio</span>
-          </a>
-          <a href="#" class="nav-item">
-            <i class="fas fa-chart-bar"></i>
-            <span>Reportes</span>
-          </a>
-          <a href="#" class="nav-item">
-            <i class="fas fa-seedling"></i>
-            <span>Cultivos</span>
-          </a>
-          <a href="#" class="nav-item">
-            <i class="fas fa-bell"></i>
-            <span>Alertas</span>
-          </a>
-          <a href="#" class="nav-item">
-            <i class="fas fa-tint"></i>
-            <span>Sensores</span>
-          </a>
-          <a href="#" class="nav-item active">
-            <i class="fas fa-cog"></i>
-            <span>Configuración</span>
-          </a>
-        </nav>
+     <nav>
+  <a href="#" class="nav-item" data-page="inicio">
+    <i class="fas fa-home"></i>
+    <span>Inicio</span>
+  </a>
+  <a href="#" class="nav-item" data-page="reportes">
+    <i class="fas fa-chart-bar"></i>
+    <span>Reportes</span>
+  </a>
+  <a href="#" class="nav-item" data-page="cultivos">
+    <i class="fas fa-seedling"></i>
+    <span>Cultivos</span>
+  </a>
+  <a href="#" class="nav-item" data-page="alertas">
+    <i class="fas fa-bell"></i>
+    <span>Alertas</span>
+  </a>
+  <a href="#" class="nav-item" data-page="sensores">
+    <i class="fas fa-tint"></i>
+    <span>Sensores</span>
+  </a>
+  <a href="#" class="nav-item active" data-page="configuracion">
+    <i class="fas fa-cog"></i>
+    <span>Configuración</span>
+  </a>
+</nav>
       </aside>
 
       <main class="main-content">
@@ -778,52 +778,32 @@
         </div>
       </main>
     </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const menuItems = document.querySelectorAll(".menu-item");
-    
-            menuItems.forEach(function(item, index) {
-                item.style.cursor = "pointer";
-                item.style.pointerEvents = "auto";
-                item.style.position = "relative";
-                item.style.zIndex = "1000";
-    
-                item.addEventListener("mousedown", function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-    
-                    let page = "";
-    
-                    switch (index) {
-                        case 0:
-                            page = "index.html";
-                            break;
-                        case 1:
-                            page = "pagina4.html";
-                            break;
-                        case 2:
-                            page = "pagina2.html";
-                            break;
-                        case 3:
-                            page = "pagina5.html";
-                            break;
-                        case 4:
-                            page = "pagina3.html";
-                            break;
-                        case 5:
-                            page = "pagina6.html";
-                            break;
-                        case 6:
-                            page = "pagina7.html";
-                            break;
-                    }
-    
-                    if (page) {
-                        window.location.href = page;
-                    }
-                });
+<script>
+    // Configuración de páginas
+    const pages = {
+        'inicio': 'index.html',
+        'reportes': 'pagina2.html',
+        'cultivos': 'pagina3.html',
+        'alertas': 'pagina4.html',
+        'sensores': 'pagina5.html',
+        'configuracion': 'pagina7.html'
+    };
+
+    // Navegación entre páginas
+    document.addEventListener('DOMContentLoaded', function() {
+        const navItems = document.querySelectorAll('.nav-item');
+        
+        navItems.forEach(item => {
+            item.style.cursor = 'pointer';
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const page = this.getAttribute('data-page');
+                if (pages[page]) {
+                    window.location.href = pages[page];
+                }
             });
         });
-    </script>
+    });
+</script>
   </body>
 </html>
