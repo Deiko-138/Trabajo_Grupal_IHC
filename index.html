@@ -184,5 +184,29 @@
         </footer>
       </main>
     </div>
+        <script>
+      const pages = {
+          'inicio': 'index.html',
+          'reportes': 'pagina2.html',
+          'cultivos': 'pagina3.html',
+          'alertas': 'pagina4.html',
+          'sensores': 'pagina5.html',
+          'configuracion': 'pagina7.html'
+      };
+      
+      document.addEventListener('DOMContentLoaded', function() {
+          const menuItems = document.querySelectorAll('.menu-item[data-page]');
+          
+          menuItems.forEach(item => {
+              item.style.cursor = 'pointer';
+              item.addEventListener('click', function() {
+                  const page = this.getAttribute('data-page');
+                  if (pages[page]) {
+                      window.location.href = pages[page];
+                  }
+              });
+          });
+      });
+      </script>
   </body>
 </html>
