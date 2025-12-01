@@ -533,32 +533,32 @@
         </div>
         <div class="logo-badge">TÉCNICO</div>
       </div>
-      <div class="menu">
-        <div class="menu-item">
-          <span>🗺️</span>
-          Mapa de Parcelas
-        </div>
-        <div class="menu-item active">
-          <span>👥</span>
-          Agricultores
-        </div>
-        <div class="menu-item">
-          <span>📊</span>
-          Calibración
-        </div>
-        <div class="menu-item">
-          <span>🔧</span>
-          Mantenimiento
-        </div>
-        <div class="menu-item">
-          <span>📈</span>
-          Reportes
-        </div>
-        <div class="menu-item">
-          <span>⚠️</span>
-          Alertas
-        </div>
-      </div>
+<div class="menu">
+  <div class="menu-item" data-page="inicio">
+    <span>🗺️</span>
+    Mapa de Parcelas
+  </div>
+  <div class="menu-item active" data-page="agricultores">
+    <span>👥</span>
+    Agricultores
+  </div>
+  <div class="menu-item" data-page="reportes">
+    <span>📊</span>
+    Calibración
+  </div>
+  <div class="menu-item" data-page="cultivos">
+    <span>🔧</span>
+    Mantenimiento
+  </div>
+  <div class="menu-item" data-page="alertas">
+    <span>📈</span>
+    Reportes
+  </div>
+  <div class="menu-item" data-page="sensores">
+    <span>⚠️</span>
+    Alertas
+  </div>
+</div>
     </div>
 
     <div class="main-content">
@@ -738,52 +738,31 @@
         </div>
       </div>
     </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const menuItems = document.querySelectorAll(".menu-item");
-    
-            menuItems.forEach(function(item, index) {
-                item.style.cursor = "pointer";
-                item.style.pointerEvents = "auto";
-                item.style.position = "relative";
-                item.style.zIndex = "1000";
-    
-                item.addEventListener("mousedown", function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-    
-                    let page = "";
-    
-                    switch (index) {
-                        case 0:
-                            page = "index.html";
-                            break;
-                        case 1:
-                            page = "pagina4.html";
-                            break;
-                        case 2:
-                            page = "pagina2.html";
-                            break;
-                        case 3:
-                            page = "pagina5.html";
-                            break;
-                        case 4:
-                            page = "pagina3.html";
-                            break;
-                        case 5:
-                            page = "pagina6.html";
-                            break;
-                        case 6:
-                            page = "pagina7.html";
-                            break;
-                    }
-    
-                    if (page) {
-                        window.location.href = page;
-                    }
-                });
+<script>
+    // Configuración de páginas
+    const pages = {
+        'inicio': 'index.html',
+        'agricultores': 'pagina4.html',
+        'reportes': 'pagina2.html',
+        'cultivos': 'pagina5.html',
+        'alertas': 'pagina3.html',
+        'sensores': 'pagina6.html'
+    };
+
+    // Navegación entre páginas
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuItems = document.querySelectorAll('.menu-item');
+        
+        menuItems.forEach(item => {
+            item.style.cursor = 'pointer';
+            item.addEventListener('click', function() {
+                const page = this.getAttribute('data-page');
+                if (pages[page]) {
+                    window.location.href = pages[page];
+                }
             });
         });
-    </script>
+    });
+</script>
   </body>
 </html>
