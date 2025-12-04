@@ -923,6 +923,53 @@
           </div>
       </div>
   </div>
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const menuItems = document.querySelectorAll(".menu-item");
+    
+            menuItems.forEach(function(item, index) {
+                item.style.cursor = "pointer";
+                item.style.pointerEvents = "auto";
+                item.style.position = "relative";
+                item.style.zIndex = "1000";
+    
+                item.addEventListener("mousedown", function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+    
+                    let page = "";
+    
+                    switch (index) {
+                        case 0:
+                            page = "index.html";
+                            break;
+                        case 1:
+                            page = "pagina4.html";
+                            break;
+                        case 2:
+                            page = "pagina2.html";
+                            break;
+                        case 3:
+                            page = "pagina5.html";
+                            break;
+                        case 4:
+                            page = "pagina3.html";
+                            break;
+                        case 5:
+                            page = "pagina6.html";
+                            break;
+                        case 6:
+                            page = "pagina7.html";
+                            break;
+                    }
+    
+                    if (page) {
+                        window.location.href = page;
+                    }
+                });
+            });
+        });
+    </script>
   <script src="agrihidra.js"></script>
 </body>
 </html>
